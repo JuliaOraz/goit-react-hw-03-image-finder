@@ -1,0 +1,18 @@
+.App {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 16px;
+  padding-bottom: 24px;
+}
+.App_text {
+  text-align: center;
+  font-size: 36px;
+  margin: 100px 0;
+  font-weight: 600;
+}
+
+.App_modal {
+  width: auto;
+  height: auto;
+  max-height: 100vh;
+}
