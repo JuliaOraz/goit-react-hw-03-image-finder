@@ -32,7 +32,7 @@ export class App extends Component {
   }
 
   fetchImage = async () => {
-    const { page, searchImages, images } = this.state;
+    const { page, searchImages } = this.state;
 
     this.setState({ loading: true });
 
