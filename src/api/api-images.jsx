@@ -10,6 +10,7 @@ const instance = axios.create({
     orientation: 'horizontal',
     per_page: 12,
   },
+  headers: { 'Content-Type': 'jsconfig/json' },
 });
 
 export const getImages = async (searchImage, page = 1) => {
