@@ -23,7 +23,9 @@ export class Searchbar extends Component {
       toast.error('Search field is empty');
       return;
     }
+
     this.props.onSearchSubmit(searchImages);
+
     this.setState({
       searchImages: '',
       page: 1,
@@ -32,21 +34,24 @@ export class Searchbar extends Component {
 
   render() {
     const { searchImages } = this.state;
-    const { onSubmitSearchForm, onChangeSearchForm } = this;
+
     return (
       <>
-        <header className={styles.Searchbar}>
-          <form className={styles.SearchForm} onSubmit={onSubmitSearchForm}>
-            <button type="submit" className={styles.SearchForm_button}>
+        <header className={styles.searchBar}>
+          <form
+            className={styles.searchForm}
+            onSubmit={this.onSubmitSearchForm}
+          >
+            <button type="submit" className={styles.searchFormButton}>
               <span
-                className={styles.SearchForm_button_label}
+                className={styles.searchFormLabel}
                 aria-label="search"
               ></span>
             </button>
 
             <input
-              onChange={onChangeSearchForm}
-              className={styles.SearchForm_input}
+              onChange={this.onChangeSearchForm}
+              className={styles.searchFormInput}
               type="text"
               value={searchImages}
               autoComplete="off"

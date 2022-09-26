@@ -9,18 +9,19 @@ export const ImageGalleryItem = ({ items, onClick }) => {
         <li
           key={id}
           onClick={() => onClick({ largeImageURL, tags })}
-          className={styles.ImageGalleryItem}
+          className={styles.imageGalleryItem}
         >
           <img
             src={webformatURL}
             alt={tags}
-            className={styles.ImageGalleryItem_image}
+            className={styles.imageGalleryItemImage}
           />
         </li>
       ))}
     </>
   );
 };
+
 ImageGalleryItem.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({

@@ -1,10 +1,9 @@
 import { Component } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
-import { getImages } from 'components/api/api-images';
+import { getImages } from 'api/api-images';
 import { Searchbar } from './Searchbar';
 import { Loader } from 'components/Loader';
-
 import { ImageGallery } from 'components/ImageGallery';
 import { Button } from './Button';
 import Modal from './Modal/Modal';
@@ -22,7 +21,7 @@ export class App extends Component {
       tags: '',
       largeImageURL: '',
     },
-    total: null,
+    total: 0,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -38,18 +37,17 @@ export class App extends Component {
 
     try {
       const data = await getImages(searchImages, page);
+
       this.setState(prevState => {
         return {
           images: [...prevState.images, ...data.hits],
           page: prevState.page + 1,
           total: data.total,
         };
-      });
+      }, this.scrollOnLoadButton);
+
       if (page === 1 && data.total > 0) {
         toast.success(`We found ${data.total} images`);
-      }
-      if (page > 1) {
-        this.scrollOnLoadButton();
       }
     } catch (error) {
       this.setState({
@@ -73,6 +71,7 @@ export class App extends Component {
       },
     });
   };
+
   onOpenModal = contentModal => {
     this.setState({
       openModal: true,
@@ -81,36 +80,40 @@ export class App extends Component {
   };
 
   scrollOnLoadButton = () => {
-    setTimeout(() => {
-      window.scrollTo({
-        top: document.body.scrollHeight - 1000,
-        behavior: 'smooth',
-      });
-    }, 100);
+    window.scrollTo({
+      top: document.body.clientHeight - 1000,
+      behavior: 'smooth',
+    });
   };
 
   render() {
-    const { loading, error, images, openModal, contentModal, total } =
+    const { loading, error, openModal, images, contentModal, total } =
       this.state;
-    const { onOpenModal, fetchImage, onCloseModal, onSearchSubmit } = this;
 
-    const checkBtn = images.length !== total && total !== null;
+    const showLoadMoreBtn = images.length !== total;
+
     return (
-      <div className={styles.App}>
-        <Searchbar onSearchSubmit={onSearchSubmit} />
+      <div className={styles.app}>
+        <Searchbar onSearchSubmit={this.onSearchSubmit} />
+
         {loading && <Loader />}
-        {error && <p className={styles.App_text}>Please try again later</p>}
-        {images.length < 1 && (
-          <div className={styles.App_text}>There's nothing here :(</div>
+
+        {error && <p className={styles.appText}>Please try again later</p>}
+
+        {images.length < 1 && !loading && (
+          <div className={styles.appText}>There's nothing here :(</div>
         )}
-        <ImageGallery images={images} onClick={onOpenModal} />
-        {checkBtn && <Button onClick={fetchImage} />}
+
+        <ImageGallery images={images} onClick={this.onOpenModal} />
+
+        {showLoadMoreBtn && !loading && <Button onClick={this.fetchImage} />}
 
         <ToastContainer autoClose={3000} />
+
         {openModal && (
-          <Modal onClose={onCloseModal}>
+          <Modal onClose={this.onCloseModal}>
             <img
-              className={styles.App_modal}
+              className={styles.appModal}
               src={contentModal.largeImageURL}
               alt={contentModal.tags}
             />

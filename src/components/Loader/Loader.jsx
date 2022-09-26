@@ -3,7 +3,7 @@ import styles from './Loader.module.css';
 
 export const Loader = () => {
   return (
-    <div className={styles.Loader_container}>
+    <div className={styles.loaderContainer}>
       <MagnifyingGlass
         visible={true}
         height="100"

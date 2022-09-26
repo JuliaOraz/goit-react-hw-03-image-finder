@@ -3,8 +3,8 @@ import styles from './Button.module.css';
 
 export const Button = ({ onClick }) => {
   return (
-    <div className={styles.Button_container}>
-      <button className={styles.Button} type="button" onClick={onClick}>
+    <div className={styles.buttonWrap}>
+      <button className={styles.button} type="button" onClick={onClick}>
         Load More
       </button>
     </div>

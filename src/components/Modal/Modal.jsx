@@ -19,14 +19,18 @@ export default class Modal extends Component {
       this.props.onClose();
     }
   };
+
   render() {
-    const { closeModal } = this;
     return createPortal(
-      <div className={styles.Overlay} onClick={closeModal}>
-        <div className={styles.Modal}>
-          <span onClick={closeModal} className={styles.Close}>
+      <div className={styles.overlay} onClick={this.closeModal}>
+        <div className={styles.modal}>
+          <button
+            type="button"
+            onClick={this.closeModal}
+            className={styles.modalBtnClose}
+          >
             x
-          </span>
+          </button>
           {this.props.children}
         </div>
       </div>,
