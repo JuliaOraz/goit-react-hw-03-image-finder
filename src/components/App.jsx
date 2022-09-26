@@ -100,7 +100,8 @@ export class App extends Component {
 
         {error && <p className={styles.appText}>Please try again later</p>}
 
-        {images.length < 1 && !loading && (
+        {images.length < 1 && !loading &&
+          !error && (
           <div className={styles.appText}>There's nothing here :(</div>
         )}
 
