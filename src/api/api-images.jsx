@@ -10,11 +10,10 @@ const instance = axios.create({
     orientation: 'horizontal',
     per_page: 12,
   },
-  headers: { 'Location': BASE_URL },
 });
 
 export const getImages = async (searchImage, page = 1) => {
-  const { data } = await instance.get(BASE_URL, {
+  const { data } = await instance.get("/", {
     params: {
       page,
       q: searchImage,
